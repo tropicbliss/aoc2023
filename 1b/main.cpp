@@ -9,7 +9,7 @@ std::optional<char> checkStringNumber(std::string_view sv)
     {
         return std::nullopt;
     }
-    // SAFETY: The string view passed should never be empty at this point
+    // SAFETY: The string view passed should never be empty or have a single character at this point
     switch (sv[0])
     {
     case 'o':
@@ -19,13 +19,18 @@ std::optional<char> checkStringNumber(std::string_view sv)
         }
         break;
     case 't':
-        if (sv.substr(1, 2) == "wo")
+        switch (sv[1])
         {
-            return '2';
-        }
-        if (sv.substr(1, 4) == "hree")
-        {
-            return '3';
+        case 'w':
+            if (sv.substr(2, 1) == "o")
+            {
+                return '2';
+            }
+        case 'h':
+            if (sv.substr(2, 3) == "ree")
+            {
+                return '3';
+            }
         }
         break;
     case 'f':
@@ -42,13 +47,18 @@ std::optional<char> checkStringNumber(std::string_view sv)
         break;
     }
     case 's':
-        if (sv.substr(1, 2) == "ix")
+        switch (sv[1])
         {
-            return '6';
-        }
-        if (sv.substr(1, 4) == "even")
-        {
-            return '7';
+        case 'i':
+            if (sv.substr(2, 1) == "x")
+            {
+                return '6';
+            }
+        case 'e':
+            if (sv.substr(2, 3) == "ven")
+            {
+                return '7';
+            }
         }
         break;
     case 'e':
