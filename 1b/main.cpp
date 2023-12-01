@@ -26,6 +26,7 @@ std::optional<char> checkStringNumber(std::string_view sv)
             {
                 return '2';
             }
+            break;
         case 'h':
             if (sv.substr(2, 3) == "ree")
             {
@@ -54,6 +55,7 @@ std::optional<char> checkStringNumber(std::string_view sv)
             {
                 return '6';
             }
+            break;
         case 'e':
             if (sv.substr(2, 3) == "ven")
             {
