@@ -22,7 +22,7 @@ std::optional<char> checkStringNumber(std::string_view sv)
         switch (sv[1])
         {
         case 'w':
-            if (sv[2] == "o")
+            if (sv[2] == 'o')
             {
                 return '2';
             }
@@ -51,7 +51,7 @@ std::optional<char> checkStringNumber(std::string_view sv)
         switch (sv[1])
         {
         case 'i':
-            if (sv[2] == "x")
+            if (sv[2] == 'x')
             {
                 return '6';
             }
