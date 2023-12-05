@@ -14,12 +14,6 @@ struct Mapper
     uint64_t rangeLen;
 };
 
-struct Range
-{
-    uint64_t start;
-    uint64_t end;
-};
-
 uint64_t mapper(std::vector<Mapper> mappers, uint64_t input)
 {
     for (const Mapper mapper : mappers)
