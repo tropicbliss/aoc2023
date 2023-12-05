@@ -10,19 +10,19 @@
 
 struct Mapper
 {
-    uint64_t dstRangeStart;
-    uint64_t srcRangeStart;
-    uint64_t rangeLen;
+    uint32_t dstRangeStart;
+    uint32_t srcRangeStart;
+    uint32_t rangeLen;
 };
 
-uint64_t mapper(std::vector<Mapper> mappers, uint64_t input)
+uint32_t mapper(std::vector<Mapper> mappers, uint32_t input)
 {
     for (const Mapper mapper : mappers)
     {
         if (input >= mapper.srcRangeStart && input < mapper.srcRangeStart + mapper.rangeLen)
         {
-            uint64_t offset = input - mapper.srcRangeStart;
-            uint64_t destination = mapper.dstRangeStart + offset;
+            uint32_t offset = input - mapper.srcRangeStart;
+            uint32_t destination = mapper.dstRangeStart + offset;
             return destination;
         }
     }
@@ -75,9 +75,9 @@ std::vector<std::string> splitAndTrim(const std::string &str, char delim)
     return tokens;
 }
 
-std::vector<uint64_t> mapToInt(std::vector<std::string> strVec)
+std::vector<uint32_t> mapToInt(std::vector<std::string> strVec)
 {
-    std::vector<uint64_t> intVec;
+    std::vector<uint32_t> intVec;
     for (const auto &str : strVec)
     {
         intVec.push_back(std::stoull(str));
@@ -106,21 +106,21 @@ int main()
     }
     auto start = std::chrono::high_resolution_clock::now();
     std::vector<std::vector<Mapper>> mapperPipeline;
-    std::unordered_set<uint64_t> startingSegments = {0};
-    uint64_t minSeed = std::numeric_limits<uint64_t>::max();
-    uint64_t maxSeed = 0; // inclusive
+    std::unordered_set<uint32_t> startingSegments = {0};
+    uint32_t minSeed = std::numeric_limits<uint32_t>::max();
+    uint32_t maxSeed = 0; // inclusive
     int pipelineIndex = -1;
     for (const std::string &line : lines)
     {
         if (startsWith(line, "seeds:"))
         {
-            std::vector<uint64_t> seedData = mapToInt(splitAndTrim(splitAndTrim(line, ':')[1], ' '));
+            std::vector<uint32_t> seedData = mapToInt(splitAndTrim(splitAndTrim(line, ':')[1], ' '));
             for (int seedIdx = 0; seedIdx < seedData.size() / 2; seedIdx++)
             {
                 int actualIdx = seedIdx * 2;
-                uint64_t startingSeed = seedData[actualIdx];
-                uint64_t rangeLength = seedData[actualIdx + 1];
-                uint64_t endingSeed = startingSeed + rangeLength - 1;
+                uint32_t startingSeed = seedData[actualIdx];
+                uint32_t rangeLength = seedData[actualIdx + 1];
+                uint32_t endingSeed = startingSeed + rangeLength - 1;
                 if (startingSeed < minSeed)
                 {
                     minSeed = startingSeed;
@@ -137,7 +137,7 @@ int main()
         }
         else if (line != "")
         {
-            std::vector<uint64_t> rawMapper = mapToInt(splitAndTrim(line, ' '));
+            std::vector<uint32_t> rawMapper = mapToInt(splitAndTrim(line, ' '));
             Mapper mapper;
             mapper.dstRangeStart = rawMapper[0];
             mapper.srcRangeStart = rawMapper[1];
@@ -150,18 +150,18 @@ int main()
             {
                 mapperPipeline[pipelineIndex].push_back(mapper);
             }
-            uint64_t startOfChunk = mapper.srcRangeStart;
-            uint64_t endOfChunkExclusive = mapper.srcRangeStart + mapper.rangeLen;
+            uint32_t startOfChunk = mapper.srcRangeStart;
+            uint32_t endOfChunkExclusive = mapper.srcRangeStart + mapper.rangeLen;
             startingSegments.insert(startOfChunk);
             startingSegments.insert(endOfChunkExclusive);
         }
     }
-    uint64_t minLocNum = std::numeric_limits<uint64_t>::max();
-    for (uint64_t seed : startingSegments)
+    uint32_t minLocNum = std::numeric_limits<uint32_t>::max();
+    for (uint32_t seed : startingSegments)
     {
         if (seed >= minSeed && seed <= maxSeed)
         {
-            uint64_t currentStage = seed;
+            uint32_t currentStage = seed;
             for (const std::vector<Mapper> mappers : mapperPipeline)
             {
                 currentStage = mapper(mappers, currentStage);
