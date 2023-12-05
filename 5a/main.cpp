@@ -87,7 +87,6 @@ int main()
 {
     std::ifstream inputFile;
     inputFile.open("input.txt");
-    std::string data;
     std::vector<std::string> lines;
     std::string line;
     if (inputFile.is_open())

@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <limits>
 #include <unordered_set>
+#include <chrono>
 
 struct Mapper
 {
@@ -88,7 +89,6 @@ int main()
 {
     std::ifstream inputFile;
     inputFile.open("input.txt");
-    std::string data;
     std::vector<std::string> lines;
     std::string line;
     if (inputFile.is_open())
@@ -104,6 +104,7 @@ int main()
         std::cerr << "Unable to open file" << std::endl;
         return 1;
     }
+    auto start = std::chrono::high_resolution_clock::now();
     std::vector<std::vector<Mapper>> mapperPipeline;
     std::unordered_set<uint64_t> startingSegments = {0};
     uint64_t minSeed = std::numeric_limits<uint64_t>::max();
@@ -171,6 +172,9 @@ int main()
             }
         }
     }
+    auto end = std::chrono::high_resolution_clock::now();
     std::cout << minLocNum << std::endl;
+    std::chrono::duration<double, std::micro> duration = end - start;
+    std::cout << "Time taken: " << duration.count() << " us\n";
     return 0;
 }
