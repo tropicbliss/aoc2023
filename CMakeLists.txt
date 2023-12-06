@@ -1,0 +1,10 @@
+set(SOURCE_FILE main.cpp)
+set(ABSL_LIBS absl::strings absl::time)
+
+cmake_minimum_required(VERSION 3.14)
+project(aoc2023 VERSION 0.1)
+set(CMAKE_CXX_STANDARD 14)
+add_subdirectory(external/abseil-cpp)
+add_subdirectory(external/fmt)
+add_executable(main ${SOURCE_FILE})
+target_link_libraries(main ${ABSL_LIBS} fmt::fmt)

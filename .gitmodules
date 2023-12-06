@@ -1,0 +1,6 @@
+[submodule "abseil-cpp"]
+	path = external/abseil-cpp
+	url = https://github.com/abseil/abseil-cpp.git
+[submodule "external/fmt"]
+	path = external/fmt
+	url = https://github.com/fmtlib/fmt.git
