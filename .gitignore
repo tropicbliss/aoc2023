@@ -1,2 +1,6 @@
 main
 external/abseil-cpp
+Makefile
+/CMakeFiles
+cmake_install.cmake
+CMakeCache.txt
