@@ -33,7 +33,7 @@ pub fn part_b() -> i64 {
             }
         }
         let mut difference = 0;
-        for subsequence in subsequences.iter().rev().skip(1) {
+        for subsequence in subsequences.into_iter().rev().skip(1) {
             let first = unsafe { subsequence.first().unwrap_unchecked() };
             difference = first - difference;
         }
