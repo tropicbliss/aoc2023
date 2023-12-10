@@ -209,19 +209,22 @@ fn main() {
     //             continue;
     //         }
     //         let mut num_of_intersections = 0;
+    //         let mut contains_horizontal_intersections = false;
     //         for draw_column in column + 1..max_columns {
     //             if visited.contains(&(row, draw_column)) {
     //                 let directions =
     //                     get_directions_special_case(row, draw_column, max_rows, max_columns)
     //                         .unwrap();
-    //                 if !(directions.contains(&Direction::East)
-    //                     || directions.contains(&Direction::West))
+    //                 if directions.contains(&Direction::East)
+    //                     && directions.contains(&Direction::West)
     //                 {
-    //                     num_of_intersections += 1;
+    //                     contains_horizontal_intersections = true;
+    //                     break;
     //                 }
+    //                 num_of_intersections += 1;
     //             }
     //         }
-    //         if num_of_intersections % 2 == 1 {
+    //         if num_of_intersections % 2 == 1 && !contains_horizontal_intersections {
     //             println!("{:?}", (row, column));
     //             enclosed_tiles += 1;
     //         }
